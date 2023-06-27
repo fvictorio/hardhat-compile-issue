@@ -24,5 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Patch downloader.js
+        run: cp downloader.js node_modules/hardhat/internal/solidity/compiler/downloader.js
+
       - name: Run tests
         run: npx hardhat test --verbose
