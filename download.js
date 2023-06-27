@@ -76,7 +76,9 @@ async function download(url, filePath, timeoutMillis = 10000, extraHeaders = {})
     if (response.statusCode >= 200 && response.statusCode <= 299) {
         log("response successful")
         const tmpFilePath = resolveTempFileName(filePath);
+        log(`tmpFilePath: ${tmpFilePath}`)
         await fs_extra_1.default.ensureDir(path_1.default.dirname(filePath));
+        log(`ensured dir for ${filePath}`)
         await streamPipeline(response.body, fs_1.default.createWriteStream(tmpFilePath));
         log("return")
         return fs_extra_1.default.move(tmpFilePath, filePath, { overwrite: true });
