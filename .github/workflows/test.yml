@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [18.15, 18.16]
+        node: [18.15, 18.16.0, 18.16.1]
     steps:
       - uses: actions/checkout@v3
 
