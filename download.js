@@ -48,9 +48,8 @@ function resolveTempFileName(filePath) {
 }
 async function download(url, filePath, timeoutMillis = 10000, extraHeaders = {}) {
     log("download start")
-    const { pipeline } = await Promise.resolve().then(() => __importStar(require("stream")));
+    const { pipeline } = await Promise.resolve().then(() => __importStar(require("stream/promises")));
     const { getGlobalDispatcher, ProxyAgent, request } = await Promise.resolve().then(() => __importStar(require("undici")));
-    const streamPipeline = util_1.default.promisify(pipeline);
     let dispatcher;
     if (process.env.http_proxy !== undefined && (0, proxy_1.shouldUseProxy)(url)) {
         log("get proxied dispatcher")
@@ -79,7 +78,7 @@ async function download(url, filePath, timeoutMillis = 10000, extraHeaders = {})
         log(`tmpFilePath: ${tmpFilePath}`)
         await fs_extra_1.default.ensureDir(path_1.default.dirname(filePath));
         log(`ensured dir for ${filePath}`)
-        await streamPipeline(response.body, fs_1.default.createWriteStream(tmpFilePath));
+        await pipeline(response.body, fs_1.default.createWriteStream(tmpFilePath));
         log("return")
         return fs_extra_1.default.move(tmpFilePath, filePath, { overwrite: true });
     }
