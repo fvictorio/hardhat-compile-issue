@@ -27,5 +27,8 @@ jobs:
       - name: Patch downloader.js
         run: cp downloader.js node_modules/hardhat/internal/solidity/compiler/downloader.js
 
+      - name: Patch download.js
+        run: cp download.js node_modules/hardhat/internal/util/download.js
+
       - name: Run tests
         run: npx hardhat test --verbose
